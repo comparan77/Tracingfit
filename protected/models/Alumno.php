@@ -9,6 +9,7 @@
  * @property string $nombre
  * @property string $apellido_paterno
  * @property string $apellido_materno
+ * @property integer $is_lmv
  *
  * The followings are the available model relations:
  * @property TblHorario $idHorario
@@ -33,8 +34,8 @@ class Alumno extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_horario, nombre, apellido_paterno, apellido_materno, horario', 'required'),
-			array('id_horario', 'numerical', 'integerOnly'=>true),
+			array('id_horario, nombre, apellido_paterno, apellido_materno, horario, is_lmv', 'required'),
+			array('id_horario, is_lmv', 'numerical', 'integerOnly'=>true),
 			array('nombre, apellido_paterno, apellido_materno', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -68,6 +69,7 @@ class Alumno extends CActiveRecord
 			'nombre' => 'Nombre',
 			'apellido_paterno' => 'Apellido Paterno',
 			'apellido_materno' => 'Apellido Materno',
+			'is_lmv'=>'Días',
 		);
 	}
 
@@ -94,6 +96,7 @@ class Alumno extends CActiveRecord
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('apellido_paterno',$this->apellido_paterno,true);
 		$criteria->compare('apellido_materno',$this->apellido_materno,true);
+		$criteria->compare('is_lmv',$this->is_lmv);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

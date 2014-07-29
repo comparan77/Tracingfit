@@ -60,6 +60,36 @@
 				'rowCssClassExpression' => '($row%2 ? $this->rowCssClass[1] : $this->rowCssClass[0] ) . ($data->id=='.$model->id_horario.' ? " selected": "" )',
 		)); ?>
 	</div>
+
+	<?php Yii::app()->clientScript->registerScript('script', <<<JS
+		$('#radio-lmv').children('label').each(function() { 
+			var radioBtn = $(this).prev();	
+			$(this).click(function() {
+			//	alert($(radioBtn).attr('id')); 
+				if($(radioBtn).attr('id') == 'r_lmv') 
+					$('#Alumno_is_lmv').val(1);
+				else
+					$('#Alumno_is_lmv').val(0);
+			});
+		});
+JS
+, CClientScript::POS_READY);?>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'is_lmv'); ?>
+		<?php echo $form->hiddenField($model,'is_lmv'); ?>
+		<?php $radio = $this->beginWidget('zii.widgets.jui.CJuiButton', array(
+			'id'=>'radio-lmv',
+    		'name'=>'radio-lmv',
+    		'buttonType'=>'buttonset',
+			'htmlOptions'=>array('class'=>'radio-inlineblock'),
+			'onclick'=>'js:function(){alert("Yes");}', 
+		)); ?>
+		<input type="radio" id="r_lmv" name="radio" <?php echo ($model->is_lmv==1 ? 'checked="checked"' : '')?>><label for="r_lmv">L, M, V</label>
+		<input type="radio" id="r_mjs" name="radio" <?php echo ($model->is_lmv==0 ? 'checked="checked"' : '')?>><label for="r_mjs">M, J, S</label>
+		<?php $this->endWidget();?>
+		<?php echo $form->error($model,'is_lmv'); ?>
+	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

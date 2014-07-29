@@ -99,10 +99,12 @@ class Asistencia extends CActiveRecord
 	
 	public function searchBy($id_horario = null, $fecha = null)
 	{
-		$sql = "select a.id, concat(a.nombre, ' ', a.apellido_paterno, ' ', a.apellido_materno) nombre_completo, coalesce(ast.id,0) ast_id from tbl_alumno a left join tbl_asistencia ast on ast.id_alumno = a.id and ast.fecha = :fecha where a.id_horario = :id_horario;";
+		//$sql = "select a.id, concat(a.nombre, ' ', a.apellido_paterno, ' ', a.apellido_materno) nombre_completo, coalesce(ast.id,0) ast_id from tbl_alumno a left join tbl_asistencia ast on ast.id_alumno = a.id and ast.fecha = :fecha where a.id_horario = :id_horario;";
+			$sql = "CALL sp_asistencia(:P_opcion, :P_id_horario, :P_fecha)";
         	$command = Yii::app()->db->createCommand($sql);
-        	$command->bindValue(':id_horario',$id_horario);
-        	$command->bindValue(':fecha',$fecha, PDO::PARAM_STR);
+        	$command->bindValue(':P_opcion',0);
+        	$command->bindValue(':P_id_horario',$id_horario);
+        	$command->bindValue(':P_fecha',$fecha, PDO::PARAM_STR);
         	$results = $command->queryAll();
 
         	return new CArrayDataProvider($results, array(

@@ -248,3 +248,6 @@ div.loading {
 div.loading * {
     opacity: .8;
 }
+div.radio-inlineblock label {
+	display: inline-block!important;
+}

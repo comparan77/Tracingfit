@@ -26,8 +26,12 @@ $this->menu=array(
 		'apellido_paterno',
 		'apellido_materno',
 		array(
-            'label'=>'horario',
+            'label'=>'Horario',
             'value'=>$model->horario->horario,
         ),
+		array(
+			'label'=>'Días',
+			'value'=>$model->is_lmv?"L, M, V":"M, J, S",
+		),
 	),
 )); ?>

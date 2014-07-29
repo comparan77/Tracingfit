@@ -9,5 +9,8 @@
 	<br />
 	<?php echo CHtml::encode($data->horario->getAttributeLabel('horario')); ?>:
 	<?php echo CHtml::encode($data->horario->horario); ?>
+	<br />
+	<?php echo CHtml::encode($data->horario->getAttributeLabel('Días')); ?>:
+	<?php echo CHtml::encode($data->is_lmv ? "L,M,V" : "M,J,S"); ?>
 
 </div>
