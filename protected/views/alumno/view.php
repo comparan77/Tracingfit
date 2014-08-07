@@ -13,6 +13,7 @@ $this->menu=array(
 	array('label'=>'Update Alumno', 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>'Delete Alumno', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Alumno', 'url'=>array('admin')),
+	array('label'=>'Estatus Alumno', 'url'=>array('AlumnoEstatus/create', 'id'=>$model->id)),
 );
 ?>
 
@@ -33,5 +34,6 @@ $this->menu=array(
 			'label'=>'Días',
 			'value'=>$model->is_lmv?"L, M, V":"M, J, S",
 		),
+		'estatus',
 	),
 )); ?>

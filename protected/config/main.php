@@ -1,7 +1,11 @@
 <?php
 
 // uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
+Yii::setPathOfAlias('yiibooster',"/var/www/booster/");
+// Yii::import("yiibooster.Test");
+// echo Yii::getPathOfAlias('yiibooster');
+// $o = new Test;
+// echo $o->hi();
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -10,8 +14,10 @@ return array(
 	'name'=>'Tracingfit',
 	'theme'=>'classic',
 	// preloading 'log' component
-	'preload'=>array('log'),
-
+	'preload'=>array(
+			'log',
+			'booster',
+	),
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
@@ -32,6 +38,9 @@ return array(
 
 	// application components
 	'components'=>array(
+		'booster'=>array(
+			'class'=>'yiibooster.components.Booster',
+		),
 		"authManager"=>array(
 			"class"=>"CDbAuthManager",
 			"connectionID"=>"db",
@@ -41,7 +50,7 @@ return array(
 			'allowAutoLogin'=>true,
 		),
 		// uncomment the following to enable URLs in path-format
-		
+	    	
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,

@@ -12,5 +12,8 @@
 	<br />
 	<?php echo CHtml::encode($data->horario->getAttributeLabel('Días')); ?>:
 	<?php echo CHtml::encode($data->is_lmv ? "L,M,V" : "M,J,S"); ?>
-
+	<br />
+	<?php echo CHtml::encode($data->getAttributeLabel('Estatus')); ?>:
+	<?php echo CHtml::encode($data->estatus); ?>
+	
 </div>

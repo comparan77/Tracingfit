@@ -19,6 +19,32 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
+        <?php echo $form->labelEx($model,'fecha_alta'); ?>
+        <?php
+            echo $form->hiddenField($model,'fecha_alta');
+            $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                'name'=>'fecha_alta',
+				'model'=>$model,
+                //'attribute'=>'fecha_alta',
+                //'model'=>$model,
+                'language'=>'es',
+                    // additional javascript options for the date picker plugin
+                    'options'=>array(
+                        'showAnim'=>'fold',
+                        'dateFormat'=>"dd 'de' MM 'de' yy",
+                        'altField'=>"#Alumno_fecha_alta",
+                        'altFormat'=>"yy-mm-dd",
+                    ),
+                    'htmlOptions'=>array(
+                        'style'=>'height:20px;',
+                    ),
+            ));
+        ?>
+        <?php echo $form->error($model,'fecha_alta'); ?>
+	</div>
+
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'nombre'); ?>
 		<?php echo $form->textField($model,'nombre',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'nombre'); ?>
@@ -62,11 +88,16 @@
 	</div>
 
 	<?php Yii::app()->clientScript->registerScript('script', <<<JS
+		var fecha_alta = $('#Alumno_fecha_alta').val().split('-');
+		var anio = fecha_alta[0] * 1;
+		var mes = fecha_alta[1] * 1 - 1;
+		var dia = fecha_alta[2] * 1;
+		$('#fecha_alta').datepicker('setDate', new Date(anio,mes,dia));
 		$('#radio-lmv').children('label').each(function() { 
 			var radioBtn = $(this).prev();	
 			$(this).click(function() {
 			//	alert($(radioBtn).attr('id')); 
-				if($(radioBtn).attr('id') == 'r_lmv') 
+				if($(this).attr('id') == 'r_lmv') 
 					$('#Alumno_is_lmv').val(1);
 				else
 					$('#Alumno_is_lmv').val(0);
@@ -78,18 +109,28 @@ JS
 	<div class="row">
 		<?php echo $form->labelEx($model,'is_lmv'); ?>
 		<?php echo $form->hiddenField($model,'is_lmv'); ?>
-		<?php $radio = $this->beginWidget('zii.widgets.jui.CJuiButton', array(
-			'id'=>'radio-lmv',
-    		'name'=>'radio-lmv',
-    		'buttonType'=>'buttonset',
-			'htmlOptions'=>array('class'=>'radio-inlineblock'),
-			'onclick'=>'js:function(){alert("Yes");}', 
-		)); ?>
-		<input type="radio" id="r_lmv" name="radio" <?php echo ($model->is_lmv==1 ? 'checked="checked"' : '')?>><label for="r_lmv">L, M, V</label>
-		<input type="radio" id="r_mjs" name="radio" <?php echo ($model->is_lmv==0 ? 'checked="checked"' : '')?>><label for="r_mjs">M, J, S</label>
-		<?php $this->endWidget();?>
+
+
+<?php
+
+$this->widget(
+'booster.widgets.TbButtonGroup',
+array(
+'context' => 'primary',
+'toggle' => 'radio',
+'htmlOptions' => array(
+	'id'=>'radio-lmv'
+),
+'buttons' => array(
+array('label' => 'L, M, V', 'htmlOptions'=>array('id'=>'r_lmv','class'=>($model->is_lmv==1 ? 'active' : ''))),
+array('label' => 'M, J, S', 'htmlOptions'=>array('id'=>'r_mjs','class'=>($model->is_lmv==0 ? 'active' : ''))),
+),
+)
+); ?>
+
 		<?php echo $form->error($model,'is_lmv'); ?>
 	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
