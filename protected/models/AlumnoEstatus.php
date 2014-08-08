@@ -95,15 +95,12 @@ class AlumnoEstatus extends CActiveRecord
 	
 	public function getLastStatus($id_alumno)
 	{
-		$sql = "select max(id), coalesce(id_estatus,3) id_estatus from tbl_alumno_estatus where id_alumno = :id_alumno group by id_estatus order by id desc limit 1";
+		$sql = "select id_estatus, id_alumno from tbl_alumno_estatus where id_alumno = :id_alumno order by id desc limit 1";
 		$command = Yii::app()->db->createCommand($sql);
 		$command->bindValue(':id_alumno',$id_alumno);
 		$row = $command->queryRow();
 
-		$val = $row["id_estatus"];
-		$val = is_null($val) ? 3 : $val;
-
-		return $val;
+		return $row["id_estatus"];
 	}
 
 	/**

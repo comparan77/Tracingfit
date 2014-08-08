@@ -106,8 +106,15 @@ class Asistencia extends CActiveRecord
         	$command->bindValue(':P_id_horario',$id_horario);
         	$command->bindValue(':P_fecha',$fecha, PDO::PARAM_STR);
         	$results = $command->queryAll();
-
-        	return new CArrayDataProvider($results, array(
+		
+			$filter = array_filter(
+				$results,
+    			function ($e) {
+					return (AlumnoEstatus::model()->getLastStatus($e["id"]) == 1);
+    			}
+			);
+	
+        	return new CArrayDataProvider($filter, array(
             		'keyField'=>'id',));
 	} 
 

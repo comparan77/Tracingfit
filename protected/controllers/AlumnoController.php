@@ -66,10 +66,29 @@ class AlumnoController extends Controller
 		$model->with('horario');
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+		$modelAlumnoStatus = new AlumnoEstatus;
+		$modelAlumnoStatus->id_alumno = $model->id;
+		$modelAlumnoStatus->fecha = $model->fecha_alta;
+		$modelAlumnoStatus->id_status = 1;
 
 		if(isset($_POST['Alumno']))
 		{
 			$model->attributes=$_POST['Alumno'];
+			$tran = $this->dbConnection->beginTransaction();
+			try {
+				if(!$model->save()){
+					$tran->rollback();
+				}
+				if(!$modelAlumnoStatus->save()){
+					$tran->rollback();
+				}				
+				$tran->commit();
+			}
+			catch (exception $ex) {
+				$tran->rollback();
+			}
+			return false;
+
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

@@ -30,7 +30,7 @@
 	<hr />
 
 	<div class="row">
-		<p>Se va a <?php echo ($model->id_estatus==3 ? "Desa" : "A"); ?>ctivar el alumno con </p>
+		<p>Se va a <?php echo ($model->id_estatus==1 ? "Desa" : "A"); ?>ctivar el alumno con </p>
 		<?php echo $form->labelEx($model,'fecha'); ?>
 		<?php echo $form->hiddenField($model,'fecha'); 
 			$this->widget('zii.widgets.jui.CJuiDatePicker',array(
@@ -64,7 +64,7 @@ JS
 , CClientScript::POS_READY);?>
 	
 	<div class="row">
-		<?php $model->id_estatus = ($model->id_estatus==3 ? 2 : 3);  ?>
+		<?php $model->id_estatus = ($model->id_estatus==1 ? 2 : 1);  ?>
 		<?php echo $form->hiddenField($model,'id_estatus'); ?>
 		<?php echo $form->error($model,'id_estatus'); ?>
 	</div>
