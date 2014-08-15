@@ -126,7 +126,7 @@ function adminAsistencia(isAsis,obj)
  
   var Action = 'create';
 	if(!isAsis)
-		Action = 'DeleteAjax&id=' + obj.attr('value').split("_")[1];
+		Action = 'deleteAjax/id=' + obj.attr('value').split("_")[1];
   $.ajax({
    type: 'POST',
     url: '<?php echo Yii::app()->createAbsoluteUrl("asistencia/' + Action  + '"); ?>',
